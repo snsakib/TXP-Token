@@ -1,5 +1,6 @@
+import "dotenv/config";
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
-import { configVariable, defineConfig } from "hardhat/config";
+import { defineConfig } from "hardhat/config";
 
 export default defineConfig({
   plugins: [hardhatToolboxViemPlugin],
@@ -28,11 +29,25 @@ export default defineConfig({
       type: "edr-simulated",
       chainType: "op",
     },
-    sepolia: {
+    ...(process.env.SEPOLIA_RPC_URL && process.env.SEPOLIA_PRIVATE_KEY
+      ? {
+          sepolia: {
+            type: "http" as const,
+            chainType: "l1" as const,
+            url: process.env.SEPOLIA_RPC_URL,
+            accounts: [`0x${process.env.SEPOLIA_PRIVATE_KEY}`],
+          },
+        }
+      : {}),
+    bscTestnet: {
       type: "http",
       chainType: "l1",
-      url: configVariable("SEPOLIA_RPC_URL"),
-      accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+      chainId: 97,
+      url: process.env.BSC_TESTNET_RPC_URL ?? "",
+      accounts: process.env.BSC_TESTNET_PRIVATE_KEY
+        ? [`0x${process.env.BSC_TESTNET_PRIVATE_KEY}`]
+        : [],
     },
   },
 });
+
