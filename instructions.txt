@@ -1,0 +1,33 @@
+# Compile command
+npx hardhat compile
+
+# Test command
+npx hardhat test test/TXPSwap.ts
+  
+ # Deploy commands
+  
+#YTCTOken
+npx hardhat ignition deploy ignition/modules/YTCToken.ts --network bscTestnet --deployment-id ytc-token
+  
+# LCXToken
+npx hardhat ignition deploy ignition/modules/LCXToken.ts --network bscTestnet --deployment-id lcx-token
+
+# TXPToken
+npx hardhat ignition deploy ignition/modules/TXPToken.ts --network bscTestnet --deployment-id txp-token
+
+# YapitSwap (after you have YTC and LCX addresses)
+npx hardhat ignition deploy ignition/modules/YapitSwap.ts --network bscTestnet --deployment-id yapit-swap \
+  --parameters '{"YapitSwapModule":{"ytc":"0xYTC_ADDRESS","lcx":"0xLCX_ADDRESS","treasury":"0xYOUR_WALLET_ADDRESS"}}'
+
+# TXPSwap
+npx hardhat ignition deploy ignition/modules/TXPSwap.ts \
+  --network bscTestnet \
+  --deployment-id txp-swap-v2 \
+  --parameters '{"TXPSwapModule":{"treasury":"0x176Cb9B62e8117242A4473b71A490F492244EDf3"}}'
+
+# Testnet Addresses
+YTC Testnet: 0x42dA837faAf4Cb4Dd808f771bDf0C9D238Ca6AA1
+LCX Testnet: 0x1bDE88fe36c60CE523fE5ad683b8568D59421604
+TXT Testnet: 0x80a30378Bd7Dc053B360163e75420745460Aa486
+YapitSwap Testnet: 0x4c2DbBF345DF570bb0b7a0389cD1207f9049E737
+TXPSwap Testnet: 0x9aD7c90767fEcC38Ba086E9340e2DCbFa387708C
